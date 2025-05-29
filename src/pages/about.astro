@@ -1,0 +1,48 @@
+---
+import H1 from "../components/h1.astro";
+import InfoLayout from "../layouts/InfoLayout.astro";
+---
+
+<InfoLayout>
+  <div class="p-4 sm:pt-8 sm:px-12 pb-20 min-h-screen flex flex-col justify-between gap-32">
+    <div class="space-y-4 sm:space-y-12">
+      <H1>Познакомьтесь со мной</H1>
+
+      <p class="text-xl xl:text-2xl text-zinc-500 text-balance">
+        Привет! Меня зовут Александр Казаков — я Unity C# разработчик с более чем 3-летним опытом в создании
+        высокопроизводительных, кроссплатформенных и архитектурно чистых игр. Работал в Eccentric Games, Gtap Studio inc. и AGAVA Tech.
+        В своей практике активно применяю принципы SOLID, DDD и современные .NET технологии.
+      </p>
+
+      <p class="text-xl xl:text-2xl text-zinc-500 text-balance">
+        Использую Entitas ECS, оптимизирую под WebGL и мобильные платформы, интегрирую SDK, аналитику и монетизацию.
+        Постоянно изучаю новейшие практики в Unity и .NET, слежу за тенденциями и применяю их на практике.
+        Связаться со мной можно через <a href="https://t.me/und3rd0gg" class="underline decoration-zinc-400 hover:text-zinc-50 hover:decoration-zinc-200" target="_blank">Telegram</a>.
+      </p>
+    </div>
+
+    <div class="space-y-2 text-base sm:text-lg">
+      <h2 class="px-4 text-zinc-400 underline underline-offset-4 decoration-zinc-500">Навыки и компетенции</h2>
+
+      <ul class="px-4 text-zinc-400 list-disc list-outside">
+        <li>Unity C# (Entitas ECS, Addressables, Jobs, WebGL)</li>
+        <li>.NET, SOLID, DDD, GRASP, async/await</li>
+        <li>AI: Behavior Tree, AIContext, State Machine</li>
+        <li>Интеграция SDK, Firebase, GameAnalytics, AdMob</li>
+        <li>Работа с Rider, профилирование, тестирование</li>
+        <li>HTML, CSS, JavaScript (включая UI-интеграции)</li>
+      </ul>
+    </div>
+
+    <div class="space-y-2 text-base sm:text-lg">
+      <h2 class="px-4 text-zinc-400 underline underline-offset-4 decoration-zinc-500">Контакты</h2>
+
+      <ul class="px-4 text-zinc-400 list-disc list-outside">
+        <li><strong>Telegram:</strong> <a href="https://t.me/und3rd0gg" target="_blank" class="underline decoration-zinc-400 hover:text-zinc-50 hover:decoration-zinc-200">@und3rd0gg</a></li>
+        <li><strong>Email:</strong> your.email@example.com</li>
+        <li><strong>GitHub:</strong> <a href="https://github.com/und3rd0gg" target="_blank" class="underline decoration-zinc-400 hover:text-zinc-50 hover:decoration-zinc-200">und3rd0gg</a></li>
+        <li><strong>Резюме:</strong> <a href="/resume.pdf" target="_blank" class="underline decoration-zinc-400 hover:text-zinc-50 hover:decoration-zinc-200">Скачать PDF</a></li>
+      </ul>
+    </div>
+  </div>
+</InfoLayout>
