@@ -1,98 +1,52 @@
 ---
-import { Image } from 'astro:assets';
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import H1 from "../components/h1.astro";
 import InfoLayout from "../layouts/InfoLayout.astro";
+import ProjectModal from "../components/project-modal.astro";
 
-// Импорты изображений (замени на свои реальные изображения)
-// import TankBallImg from "../assets/tank-ball.jpg";
-// import SushiLoopImg from "../assets/sushi-loop.jpg";
-// import MergeShootImg from "../assets/merge-shoot.jpg";
-// import ColorSphereImg from "../assets/color-sphere.jpg";
-// import GunSimImg from "../assets/gun-sim.jpg";
-// import RachelImg from "../assets/rachel.jpg";
-// import SweetWorldImg from "../assets/sweet-world.jpg";
-// import MageSurvivalImg from "../assets/mage-survival.jpg";
-// import BallRaceImg from "../assets/ball-race.jpg";
-import ElectricMotor from "../assets/electro-magnetic-motor.jpg";
-
-const projects = [
-  {
-    title: "Tank Ball: Monster Battle",
-    description: "Poki/WebGL. Архитектура, логика, UI, интеграция SDK.",
-    image: ElectricMotor,
-    link: "https://poki.com/en/g/tank-ball-monster-battle"
-  },
-  {
-    title: "Sushi Loop ASMR",
-    description: "Android. Сцена, интеграция SDK.",
-    image: ElectricMotor,
-    link: "https://play.google.com/store/apps/details?id=com.gtap.sushiloopasmr"
-  },
-  {
-    title: "Merge and Shoot",
-    description: "Android. Сцена, инструменты балансировки.",
-    image: ElectricMotor,
-    link: "https://play.google.com/store/apps/details?id=arcade.merge.shoot"
-  },
-  {
-    title: "Color Sphere",
-    description: "Android. Шейдеры, SDK, балансировка.",
-    image: ElectricMotor,
-    link: "https://play.google.com/store/apps/details?id=com.gtap.colorsphere&hl=en"
-  },
-  {
-    title: "Симулятор Оружия 3Д",
-    description: "WebGL. Логика, UI, SDK, оптимизация.",
-    image: ElectricMotor,
-    link: "https://yandex.ru/games/developer/82642#app=313826"
-  },
-  {
-    title: "Один день из жизни Рейчел",
-    description: "WebGL. Функционал, SDK, UI, промо.",
-    image: ElectricMotor,
-    link: "https://yandex.ru/games/app/342957#info"
-  },
-  {
-    title: "Мир Сладостей",
-    description: "WebGL. Багфиксы, портирование, оптимизация.",
-    image: ElectricMotor,
-    link: "https://yandex.ru/games/developer/71563#app=311275"
-  },
-  {
-    title: "Выживание Мага: Огненная битва",
-    description: "WebGL. Багфиксы, портирование, оптимизация.",
-    image: ElectricMotor,
-    link: "https://yandex.ru/games/app/354249?lang=ru#info"
-  },
-  {
-    title: "Шариковая Гонка: Собери Все!",
-    description: "WebGL. Багфиксы, портирование, оптимизация.",
-    image: ElectricMotor,
-    link: "https://yandex.ru/games/search?draft=true&lang=ru&query=%D1%88%D0%B0%D1%80%D0%B8%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%B3%D0%BE%D0%BD%D0%BA%D0%B0#app=359715"
-  }
-];
+const projects = await getCollection("projects");
 ---
-
 <InfoLayout>
-  <div class="p-4 sm:pt-8 sm:px-12 pb-20 min-h-screen">
-    <H1>Проекты</H1>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <style>[x-cloak] { display: none !important; }</style>
 
-    <ul class="mt-4 sm:mt-12 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-16 sm:gap-8">
-      {projects.map((project) => (
-        <li>
-          <a href={project.link} target="_blank" rel="noopener noreferrer">
-            <Image
-              src={project.image}
-              alt={project.title}
-              class="aspect-[1/1.33] object-center object-cover rounded-lg shadow-lg mb-4 sm:mb-0 sm:mr-4"
-            />
-          </a>
-          <div class="p-1 sm:p-2">
-            <h2 class="text-base text-zinc-100">{project.title}</h2>
-            <p class="text-sm text-zinc-400 text-balance">{project.description}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
+  <div x-data="{ showModal: false, selectedProject: null }">
+    <div class="p-4 sm:pt-8 sm:px-12 pb-20 min-h-screen">
+      <H1>Проекты</H1>
+
+      <ul class="mt-4 sm:mt-12 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-16 sm:gap-8">
+        {projects.map(({ data, slug, body }) => (
+          <li>
+            <button
+              type="button"
+              @click={`showModal = true; selectedProject = {
+                title: '${data.title}',
+                description: '${data.description}',
+                detailsId: 'project-details-${slug}',
+                image: '${data.image.src}',
+                link: '${data.link}'
+              }`}
+              class="text-left w-full"
+            >
+              <Image
+                src={data.image}
+                alt={data.title}
+                class="aspect-[1/1.33] object-cover rounded-lg shadow-lg mb-4 transition-transform hover:scale-[1.02]"
+              />
+              <div class="p-1 sm:p-2">
+                <h2 class="text-base text-zinc-100">{data.title}</h2>
+                <p class="text-sm text-zinc-400">{data.description}</p>
+              </div>
+            </button>
+
+            <!-- Скрытый HTML-контент для модального окна -->
+            <div id={`project-details-${slug}`} class="hidden" set:html={body}></div>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <ProjectModal />
   </div>
 </InfoLayout>

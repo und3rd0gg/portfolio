@@ -20,4 +20,15 @@ const articles = defineCollection({
     }),
 });
 
-export const collections = { articles };
+const projects = defineCollection({
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      image: image(),
+      link: z.string().url(),
+    }),
+});
+
+
+export const collections = { articles, projects };
