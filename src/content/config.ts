@@ -8,7 +8,7 @@ const articles = defineCollection({
         coverAlt: z.string(),
         title: z.string(),
         slug: z.string(),
-        snippet: z.string(),
+        snippet: z.string().optional(),
         category: z.string(),
         pubDate: z.coerce.date(),
         readingDuration: z.number(),
