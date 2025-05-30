@@ -12,7 +12,7 @@ const articles = defineCollection({
         category: z.string(),
         pubDate: z.coerce.date(),
         readingDuration: z.number(),
-        originalLink: z.string().url(),
+        originalLink: z.string().url().optional(),
         isDraft: z.boolean().default(false),
         updatedDate: z.coerce.date().optional(),
         author: z.string().default('Retro Rocket Team'),
